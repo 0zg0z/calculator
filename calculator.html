@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="grid.css" rel="stylesheet" >
+    <script>
+        var calculated = false;
+        var lastop = true;
+
+        function writeNumber(el){
+            if(lastop == false || !isNaN(el.innerHTML)){
+            if(isNaN(el.innerHTML)){
+                calculated = false;
+                lastop = true;
+            }
+            else{
+                lastop = false;
+            }
+            if(calculated){
+                del();
+                calculated = false;
+                lastop = false;
+            }
+            
+                document.getElementById("screen").innerHTML += el.innerHTML;
+            }
+            
+            
+        }
+
+        function calculate(){
+            document.getElementById("screen").innerHTML = eval(document.getElementById("screen").innerHTML);
+            calculated = true;
+            
+        }
+
+        function del(){
+            document.getElementById("screen").innerHTML = "";
+            lastop = true;
+        }
+
+        function Bactract(){
+            let text = document.getElementById("screen").innerHTML;
+           // console.log(text + "   length:" + text.length);
+            if(text.length == 1){
+            del();}
+            else{document.getElementById("screen").innerHTML = text.slice(0,text.length - 1);}
+        
+            
+        }
+
+    </script>
+    <title>Document</title>
+</head>
+<body>
+
+    <div id= "gridCont" class="grid-container">
+        <div id= "screen"class="screen">   
+        </div>
+        <button onclick="Bactract() " style="grid-column: 4/5; grid-row:2/3" class="grid-item">B</button>
+        <button onclick="del()" class="grid-item">C</button>
+        <button onclick="calculate()" class="equal-sign">=</button>
+
+        <script>
+            const button_text = ["/","*","1","2","3","-","4","5","6","+","7","8","9","%","0","."];
+            var str = "";
+            for(const num of button_text){
+                str += "<button onclick=\"writeNumber(this)\" class=\"grid-item\">" + num + "</button>"
+            };
+            str = document.getElementById("gridCont").innerHTML + str;
+            document.getElementById("gridCont").innerHTML = str;
+        </script>
+
+        
+
+    </div>
+
+   
+      
+</body>
+</html>
